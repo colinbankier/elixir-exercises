@@ -37,6 +37,38 @@ defmodule Conways.GridTest do
     assert Grid.size(grid) == 11
   end
 
+  test "cell with fewer than two live neighbours dies" do
+    grid = Grid.new [
+      [0, 0, 0],
+      [0, 1, 0],
+      [0, 0, 0]
+    ]
+
+    next_state = grid |> Grid.next |> Grid.as_list
+
+    assert next_state == [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ]
+  end
+
+  test "cell with two live neighbours lives on to the next generation" do
+    grid = Grid.new [
+      [0, 1, 0],
+      [0, 1, 1],
+      [0, 0, 0]
+    ]
+
+    next_state = grid |> Grid.next |> Grid.as_list
+
+    assert next_state == [
+      [0, 0, 0],
+      [0, 1, 0],
+      [0, 0, 0]
+    ]
+  end
+
   def grid_value?(0), do: true
   def grid_value?(1), do: true
   def grid_value?(val), do: false
